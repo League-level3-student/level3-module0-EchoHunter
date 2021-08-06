@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class CrazyDigitalPainting {
     // 1. Create two final static integers for the width and height of the display.
-final static int width = 300;
-final static int height = 200;
+final static int width = 255;
+final static int height = 235;
 Random r = new Random ();
     // 2. Create a 2D array of Color objects. You will need to import
     //    java.awt.Color. Initialize the size of the array using the 
@@ -20,9 +20,9 @@ Color [][] colors = new Color [width][height];
         //    to a new color. The sample image was created using the following 
         //    pattern:
         //    colors[i][j] = new Color(i % 256, (i * j) % 256, j % 256);
-for(Color [] g: colors) {
-	for(Color m:g) {
-		m = new Color(r.nextInt(255), r.nextInt(50)+200,r.nextInt(45)+21);
+for (int i = 0; i < colors.length; i++) {
+	for (int j = 0; j < colors[i].length; j++) {
+		colors [i][j] = new Color(i/20+j%256, ((i+j)/2)%256, ((j+i)/ 5)%256);
 	}
 }
         // 5. Come up with your own pattern to make a cool crazy image.
