@@ -53,7 +53,53 @@ public class TheWrongWayCow {
     public static int[] findWrongWayCow(final char[][] field) {
         // Fill in the code to return the [col, row] coordinate position of the
         // head (letter 'c') of the wrong way cow!
-        
-        return null;
+    	int facingNorth = 0;
+    	int facingSouth = 0;
+    	int facingWest = 0;
+    	int facingEast = 0;
+    	int yLocation = 0;
+    	int xLocation =0;
+    	int [] returned = new int[2];
+        for (int i = 0; i < field.length; i++) {
+			for (int j = 0; j < field[i].length; j++) {
+				if(field[i][j] == 'o') {
+					if(i != 0) {
+					if(field[i-1][j] == 'c') {
+						facingNorth++;
+					if((facingNorth <facingSouth)&&(facingNorth <facingWest)&&(facingNorth <facingEast)) {
+					yLocation = i-1;
+					xLocation = j;
+					}
+					}
+					if(field[i+1][j]=='c') {
+						facingSouth++;
+						if((facingSouth <facingWest)&&(facingSouth <facingNorth)&&(facingSouth <facingEast)) {
+							yLocation = i+1;
+							xLocation = j;
+						}
+					}
+					}
+					if(j != 0) {
+					if(field[i][j-1] == 'c') {
+						facingWest++;
+						if((facingWest <facingSouth)&&(facingWest <facingNorth)&&(facingWest <facingEast)) {
+							yLocation = i;
+							xLocation = j-1;
+						}
+					}
+					if(field[i][j+1] =='c') {
+						facingEast++;
+						if((facingEast <facingSouth)&&(facingEast <facingNorth)&&(facingEast <facingWest)) {
+							yLocation = i;
+							xLocation = j+1;
+						}
+					}
+				}
+				}
+			}
+		}
+        returned [0] = yLocation;
+        returned [1] = xLocation;
+        return returned;
     }
-}
+    }
