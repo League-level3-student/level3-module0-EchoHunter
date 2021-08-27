@@ -104,7 +104,7 @@ public class TheWrongWayCowTest {
       "cowcowcowcowcowcowcowcowcowcowcowcowcowcowcowcow".toCharArray(),
       "cowcowcowcowcowcowcowcowcowcowcowcowcowcowcowcow".toCharArray(),
       "cowcowcowcowcowcowcowcowcowcowcowcowcowcowcowcow".toCharArray(),
-      "cowcowcowcowcowcowcowcowcowcowcowcowcowcowcowcow".toCharArray(),
+     "cowcowcowcowcowcowcowcowcowcowcowcowcowcowcowcow".toCharArray(),
       "cowcowcowcowcowcowcowcowcowcowcowcowcowcowcowcow".toCharArray(),
       "cowcowcowcowcowcowcowcowcowcowcowcowcowcowcowcow".toCharArray(),
       "cowcowcowcowcowcowcowcowcowcowcowcowcowcowcowcow".toCharArray(),
