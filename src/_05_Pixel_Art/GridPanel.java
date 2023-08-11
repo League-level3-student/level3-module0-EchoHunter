@@ -3,11 +3,12 @@ package _05_Pixel_Art;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.Serializable;
 
 import javax.swing.JPanel;
 import javax.swing.Box.Filler;
 
-public class GridPanel extends JPanel{
+public class GridPanel extends JPanel implements Serializable{
 
     private static final long serialVersionUID = 1L;
     private int windowWidth;

@@ -1,12 +1,20 @@
 package _05_Pixel_Art;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import javax.swing.JFrame;
 
-public class PixelArtMaker implements MouseListener{
+public class PixelArtMaker implements MouseListener, ActionListener{
     private JFrame window;
     private GridInputPanel gip;
     private GridPanel gp;
@@ -17,8 +25,17 @@ public class PixelArtMaker implements MouseListener{
         window = new JFrame("Pixel Art");
         window.setLayout(new FlowLayout());
         window.setResizable(false);
-
+        if(datExist()) {
+        	try(FileInputStream fis = new FileInputStream(new File ("src/_05_Pixel_Art/saved.dat"));ObjectInputStream ois = new ObjectInputStream(fis)){
+        		gp.pixels= (Pixel[][]) ois.readObject();
+        		submitGridData(500,500, gp.pixels.length,gp.pixels[0].length);
+        	}catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        	
+        }else {
         window.add(gip);
+        }
         window.pack();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setVisible(true);
@@ -26,7 +43,7 @@ public class PixelArtMaker implements MouseListener{
 
     public void submitGridData(int w, int h, int r, int c) {
         gp = new GridPanel(w, h, r, c);
-        csp = new ColorSelectionPanel();
+        csp = new ColorSelectionPanel(this);
         window.remove(gip);
         window.add(gp);
         window.add(csp);
@@ -61,5 +78,25 @@ public class PixelArtMaker implements MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+    public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		 final String DATA_FILE = "src/_05_Pixel_Art/saved.dat";
+		
+			try(ObjectOutputStream oOS = new ObjectOutputStream(new FileOutputStream(new File(DATA_FILE)))){
+				oOS.writeObject(gp.pixels);
+			}catch(IOException d) {
+				
+			}
+	}
+    private boolean datExist() {
+    	try(FileInputStream fis = new FileInputStream(new File ("src/_05_Pixel_Art/saved.dat"));ObjectInputStream ois = new ObjectInputStream(fis)) {
+    		File dat = new File("src/_05_Pixel_Art/saved.dat");
+    		gp.pixels= (Pixel[][]) ois.readObject();
+    		return true;
+    	}catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	return false;
     }
 }
