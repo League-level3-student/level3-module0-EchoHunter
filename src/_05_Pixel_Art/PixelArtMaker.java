@@ -25,16 +25,10 @@ public class PixelArtMaker implements MouseListener, ActionListener{
         window = new JFrame("Pixel Art");
         window.setLayout(new FlowLayout());
         window.setResizable(false);
-        if(datExist()) {
-        	try(FileInputStream fis = new FileInputStream(new File ("src/_05_Pixel_Art/saved.dat"));ObjectInputStream ois = new ObjectInputStream(fis)){
-        		gp.pixels= (Pixel[][]) ois.readObject();
-        		submitGridData(500,500, gp.pixels.length,gp.pixels[0].length);
-        	}catch(Exception e) {
-        		e.printStackTrace();
-        	}
-        	
-        }else {
+        if(!datExist()) {
         window.add(gip);
+        }else {
+        	submitGridData(0,0,0,0);
         }
         window.pack();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,7 +36,15 @@ public class PixelArtMaker implements MouseListener, ActionListener{
     }
 
     public void submitGridData(int w, int h, int r, int c) {
-        gp = new GridPanel(w, h, r, c);
+    	if(datExist()) {
+        	try(FileInputStream fis = new FileInputStream(new File ("src/_05_Pixel_Art/saved.dat"));ObjectInputStream ois = new ObjectInputStream(fis)){
+        		gp =(GridPanel) ois.readObject();
+        	}catch(Exception e) {
+        		e.printStackTrace();
+        	}
+        }else {
+    	gp = new GridPanel(w, h, r, c);
+        }
         csp = new ColorSelectionPanel(this);
         window.remove(gip);
         window.add(gp);
@@ -84,15 +86,14 @@ public class PixelArtMaker implements MouseListener, ActionListener{
 		 final String DATA_FILE = "src/_05_Pixel_Art/saved.dat";
 		
 			try(ObjectOutputStream oOS = new ObjectOutputStream(new FileOutputStream(new File(DATA_FILE)))){
-				oOS.writeObject(gp.pixels);
+				oOS.writeObject(gp);
 			}catch(IOException d) {
 				
 			}
 	}
     private boolean datExist() {
     	try(FileInputStream fis = new FileInputStream(new File ("src/_05_Pixel_Art/saved.dat"));ObjectInputStream ois = new ObjectInputStream(fis)) {
-    		File dat = new File("src/_05_Pixel_Art/saved.dat");
-    		gp.pixels= (Pixel[][]) ois.readObject();
+    		gp = (GridPanel) ois.readObject();
     		return true;
     	}catch(Exception e) {
     		e.printStackTrace();
